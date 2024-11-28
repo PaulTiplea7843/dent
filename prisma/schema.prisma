@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Pacient {
+  id                Int     @id @default(autoincrement())
+  nume              String
+  prenume           String
+  cnp               String
+  adresa            String
+  telefon           String
+  consimtamantDate  Boolean
+  anamneza          Boolean
+  operatiuni        Operatiuni[]
+  restante          Restante[]
+  fisiere           Fisiere[]
+  semnaturi         Semnaturi[]
+  programari        Programari[]
+}
+
+model Operatiuni {
+  id        Int      @id @default(autoincrement())
+  pacientId Int
+  nume      String
+  data      DateTime
+  descriere String
+  pacient   Pacient  @relation(fields: [pacientId], references: [id])
+}
+
+model Restante {
+  id        Int      @id @default(autoincrement())
+  pacientId Int
+  nume      String
+  data      DateTime
+  descriere String
+  pacient   Pacient  @relation(fields: [pacientId], references: [id])
+}
+
+model Fisiere {
+  id        Int      @id @default(autoincrement())
+  pacientId Int
+  fisier  String
+  nume      String
+  pacient   Pacient  @relation(fields: [pacientId], references: [id])
+}
+
+model Semnaturi {
+  id        Int      @id @default(autoincrement())
+  pacientId Int
+  fisier String
+  pacient   Pacient  @relation(fields: [pacientId], references: [id])
+}
+
+model Programari {
+  id        Int      @id @default(autoincrement())
+  pacientId Int
+  ora       DateTime
+  data      DateTime
+  numePacient String
+  pacient   Pacient  @relation(fields: [pacientId], references: [id])
+}
