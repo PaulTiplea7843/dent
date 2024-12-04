@@ -70,11 +70,8 @@ export async function DELETE(req = new NextRequest()) {
     await prisma.pacient.delete({
       where: { id: Number(id) },
     });
-    return NextResponse.json(null, { status: 204 });
+    return NextResponse.json({ message: "User saved" }, { status: 204 });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Error deleting pacient" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }

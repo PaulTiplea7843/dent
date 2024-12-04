@@ -3,15 +3,12 @@
 import { useState } from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 
-export function FormPacient({ setOpen, method, id }) {
+export function Form({ setOpen, method, id }) {
   const [formState, setFormState] = useState({
     nume: "",
-    prenume: "",
-    cnp: "",
-    adresa: "",
-    telefon: "",
-    consimtamantDate: false,
-    anamneza: false,
+    data: "",
+    descriere: "",
+    pacientId: 1, // craeate a select for choosing pacients
   });
 
   const handleInputChange = (e) => {
@@ -31,7 +28,7 @@ export function FormPacient({ setOpen, method, id }) {
 
     if (method == "create") {
       try {
-        const response = await fetch("/api/pacient", {
+        const response = await fetch("/api/operatiuni", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -47,7 +44,7 @@ export function FormPacient({ setOpen, method, id }) {
       }
     } else {
       try {
-        const response = await fetch("/api/pacient", {
+        const response = await fetch("/api/operatiuni", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -67,12 +64,9 @@ export function FormPacient({ setOpen, method, id }) {
     // Optionally, reset form state or show success message
     setFormState({
       nume: "",
-      prenume: "",
-      cnp: "",
-      adresa: "",
-      telefon: "",
-      consimtamantDate: false,
-      anamneza: false,
+      data: "",
+      descriere: "",
+      pacientId: 1,
     });
     setOpen(false);
   };
@@ -103,55 +97,13 @@ export function FormPacient({ setOpen, method, id }) {
             }}
           />
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Prenume
+            Descriere
           </Typography>
           <Input
             size="lg"
             placeholder="Prenume"
             name="prenume"
             value={formState.prenume}
-            onChange={handleInputChange}
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            CNP
-          </Typography>
-          <Input
-            size="lg"
-            placeholder="CNP"
-            name="cnp"
-            value={formState.cnp}
-            onChange={handleInputChange}
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Adresa
-          </Typography>
-          <Input
-            size="lg"
-            placeholder="Adresa"
-            name="adresa"
-            value={formState.adresa}
-            onChange={handleInputChange}
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Telefon
-          </Typography>
-          <Input
-            size="lg"
-            placeholder="Telefon"
-            name="telefon"
-            value={formState.telefon}
             onChange={handleInputChange}
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             labelProps={{

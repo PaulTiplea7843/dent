@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { CreateModalPacient } from "./createModal";
+import { CreateModalOperatiuni } from "./createModal";
 
-const TABLE_HEAD = ["Nume", "Prenume", "Telefon", ""];
+const TABLE_HEAD = ["Nume", "Descriere", "Data", ""];
 
-export function PacientTable() {
+export function OperatiuniTable() {
   const [tableRows, setTableRows] = useState([]);
 
   useEffect(() => {
-    fetch("/api/pacient")
+    fetch("/api/operatiuni")
       .then((response) => response.json())
       .then((data) => setTableRows(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const deletePacient = (id) => {
-    fetch(`/api/pacient`, {
+    fetch(`/api/operatiuni`, {
       method: "DELETE",
       body: JSON.stringify({ id: id }),
     })
@@ -53,7 +53,7 @@ export function PacientTable() {
           </tr>
         </thead>
         <tbody>
-          {tableRows.map(({ nume, prenume, telefon, id }, index) => {
+          {tableRows.map(({ nume, descriere, data }, index) => {
             const isLast = index === tableRows.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
@@ -74,7 +74,7 @@ export function PacientTable() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {prenume}
+                    {descriere}
                   </Typography>
                 </td>
                 <td className={classes}>
@@ -83,12 +83,12 @@ export function PacientTable() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {telefon}
+                    {data}
                   </Typography>
                 </td>
                 <td className={classes}>
                   <div className="flex- justify-between">
-                    <CreateModalPacient method="update" id={id} />
+                    <CreateModalOperatiuni method="update" id={id} />
                     <Button
                       variant=""
                       size="md"
